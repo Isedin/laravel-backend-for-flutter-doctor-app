@@ -56,6 +56,8 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
+    //this is to state that users have one relationship with doctor
+    //each user has one doctor
     public function doctor()
     {
         return $this->hasOne(Doctor::class, 'doc_id');

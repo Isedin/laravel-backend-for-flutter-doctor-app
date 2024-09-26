@@ -24,7 +24,7 @@
                                     reader.readAsDataURL($refs.photo.files[0]);
                             " />
 
-            <x-label for="photo" value="{{ __('Profile Photo') }}" />
+            <x-label for="photo" value="{{ __('Profile Picture') }}" />
 
             <!-- Current Profile Photo -->
             <div class="mt-2" x-show="! photoPreview">
@@ -55,7 +55,7 @@
         <!-- Name -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="name" value="{{ __('Name') }}" />
-            <x-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="state.name" required autocomplete="name" />
+            <x-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="state.name" autocomplete="name" />
             <x-input-error for="name" class="mt-2" />
         </div>
 
@@ -64,7 +64,6 @@
         <!-- Bio Data -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="bio" value="{{ __('Bio Data') }}" />
-            <!-- <x-input id="bio" type="text" class="mt-1 block w-full" wire:model="state.name" required autocomplete="bio" /> -->
             <textarea id="bio" class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" wire:model.defer="state.bio_data" placeholder="Bio Data"></textarea>
             <x-input-error for="bio" class="mt-2" />
         </div>

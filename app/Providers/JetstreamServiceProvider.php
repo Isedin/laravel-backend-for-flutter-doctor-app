@@ -27,14 +27,14 @@ class JetstreamServiceProvider extends ServiceProvider
     public function boot(): void
     {
 
-        //with the next code we can omit user registration and use the doctor registration only
-        // Fortify::authenticateUsing(function (Request $request) {
-        //     $user = User::where('email', $request->email)->first();
-        //     if ($user && Hash::check($request->password, $user->password) && $user->type == 'doctor') {
+        // allow doctor registration only
+        Fortify::authenticateUsing(function (Request $request) {
+            $user = User::where('email', $request->email)->first();
+            if ($user && Hash::check($request->password, $user->password) && $user->type == 'doctor') {
 
-        //         return $user;
-        //     }
-        // });
+                return $user;
+            }
+        });
 
         $this->configurePermissions();
 
