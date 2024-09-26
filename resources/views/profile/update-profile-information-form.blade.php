@@ -7,8 +7,6 @@
         {{ __('Update your account\'s profile information and email address.') }}
     </x-slot>
 
-    {{-- now, we will change the profile page, to update doctor info --}}
-
     <x-slot name="form">
         <!-- Profile Photo -->
         @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
@@ -26,7 +24,7 @@
                                     reader.readAsDataURL($refs.photo.files[0]);
                             " />
 
-            <x-label for="photo" value="{{ __('Profile Picture') }}" />
+            <x-label for="photo" value="{{ __('Profile Photo') }}" />
 
             <!-- Current Profile Photo -->
             <div class="mt-2" x-show="! photoPreview">
@@ -57,23 +55,24 @@
         <!-- Name -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="name" value="{{ __('Name') }}" />
-            <x-input id="name" type="text" class="mt-1 block w-full" wire:model="state.name" required autocomplete="name" />
+            <x-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="state.name" required autocomplete="name" />
             <x-input-error for="name" class="mt-2" />
         </div>
 
-        {{-- wire:model.defer is to defer the input with the livewore property intil an action is performed, such as save button pressed --}}
+        {{-- wire:model.defer is to defer the input with the livewire property until an actionis performed, such as save button pressed --}}
 
         <!-- Bio Data -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="bio" value="{{ __('Bio Data') }}" />
-            <textarea class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" id="bio" wire:model.defer="state.bio_data" placeholder="Bio Data"></textarea>
+            <!-- <x-input id="bio" type="text" class="mt-1 block w-full" wire:model="state.name" required autocomplete="bio" /> -->
+            <textarea id="bio" class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" wire:model.defer="state.bio_data" placeholder="Bio Data"></textarea>
             <x-input-error for="bio" class="mt-2" />
         </div>
 
         <!-- Experience -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="experience" value="{{ __('Experience') }}" />
-            <x-input id="experience" type="number" min="0" max="60" class="mt-1 block w-full" wire:model.defer="state.experience" autocomplete="experience" />
+            <x-input id="experience" type="number" min="0" max="50" class="mt-1 block w-full" wire:model.defer="state.experience" autocomplete="experience" />
             <x-input-error for="experience" class="mt-2" />
         </div>
 
@@ -107,6 +106,8 @@
             @endif
         </div>
     </x-slot>
+
+    {{-- in order to save these data into database, we have to edit to Laravel/Jetstream/http/livewire/updateProfileInformationForm --}}
 
     <x-slot name="actions">
         <x-action-message class="me-3" on="saved">

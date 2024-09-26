@@ -57,8 +57,6 @@ return [
     |
     */
 
-    //enable the profile photo
-
     'features' => [
         Features::termsAndPrivacyPolicy(),
         Features::profilePhotos(),

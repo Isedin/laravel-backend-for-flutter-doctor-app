@@ -3,12 +3,12 @@
 namespace App\Providers;
 
 use App\Actions\Jetstream\DeleteUser;
+use App\Models\User; // Import the User model
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
 use Laravel\Jetstream\Jetstream;
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class JetstreamServiceProvider extends ServiceProvider
@@ -27,15 +27,14 @@ class JetstreamServiceProvider extends ServiceProvider
     public function boot(): void
     {
 
-        //check user email, password, and allow only doctor to register
-        //this will be changed later to allow only admin to register doctor
-        Fortify::authenticateUsing(function (Request $request) {
-            $user = User::where('email', $request->email)->first();
-            if ($user && Hash::check($request->password, $user->password) && $user->type == 'doctor') {
-                return $user;
-            }
-        });
+        //with the next code we can omit user registration and use the doctor registration only
+        // Fortify::authenticateUsing(function (Request $request) {
+        //     $user = User::where('email', $request->email)->first();
+        //     if ($user && Hash::check($request->password, $user->password) && $user->type == 'doctor') {
 
+        //         return $user;
+        //     }
+        // });
 
         $this->configurePermissions();
 

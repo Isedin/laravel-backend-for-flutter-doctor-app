@@ -2,8 +2,8 @@
 
 namespace App\Actions\Fortify;
 
-use App\Models\Doctor;
 use App\Models\User;
+use App\Models\Doctor;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;

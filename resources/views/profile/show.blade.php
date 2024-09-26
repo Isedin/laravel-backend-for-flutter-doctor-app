@@ -21,7 +21,7 @@
                 <x-section-border />
             @endif
 
-            <!-- here, we can add two factor authentication and logout other browser sessions -->
+            <!-- we commented out the two factor authentication and logout other browser sessions form -->
             <!-- @if (Laravel\Fortify\Features::canManageTwoFactorAuthentication())
                 <div class="mt-10 sm:mt-0">
                     @livewire('profile.two-factor-authentication-form')

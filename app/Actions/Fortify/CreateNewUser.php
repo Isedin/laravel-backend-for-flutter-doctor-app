@@ -7,10 +7,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
-use App\Models\Doctor; // Import the Doctor model
+use App\Models\Doctor;
 use App\Models\UserDetails;
-
-//this is to register a new user/doctor
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -34,22 +32,20 @@ class CreateNewUser implements CreatesNewUsers
         $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
-            'type' => 'doctor',
-            // 'type' => $input['type'], //we add this to differentiate between user and doctor
+            'type' => $input['type'],
             'password' => Hash::make($input['password']),
         ]);
-        // if($input['type'] == 'doctor') {
-        $doctorInfo = Doctor::create([
-            'doc_id' => $user->id,
-            'status' => 'active',
-        ]);
-        // }
-        // else if($input['type'] == 'user'){
-        //     $userInfo = UserDetails::create([
-        //         'user_id' => $user->id,
-        //         'status' => 'active',
-        //     ]);
-        // }
+        if ($input['type'] == 'doctor') {
+            $doctorInfo = Doctor::create([
+                'doc_id' => $user->id,
+                'status' => 'active',
+            ]);
+        } else if ($input['type'] == 'user') {
+            $userInfo = UserDetails::create([
+                'user_id' => $user->id,
+                'status' => 'active',
+            ]);
+        }
         return $user;
     }
 }
