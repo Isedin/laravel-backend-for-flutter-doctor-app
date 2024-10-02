@@ -67,4 +67,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserDetails::class, 'user_id');
     }
+
+    //a user may have many appointments
+    public function appointments()
+    {
+        return $this->hasMany(Appointments::class, 'user_id');
+    }
 }
