@@ -9,6 +9,7 @@ use Illuminate\Validation\ValidationException;
 use App\Models\UserDetails;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Doctor;
+use App\Models\Appointments;
 
 class UsersController extends Controller
 {
@@ -22,6 +23,9 @@ class UsersController extends Controller
         $user = Auth::user();
         $doctor = User::where('type', 'doctor')->get();
         $doctorData = Doctor::all();
+        //return today appointment together with user data
+        $date = now()->format('n/j/Y'); // this is date format without leading zero
+        $appointment = Appointments::where('date', $date)->first();
 
         //collect user data and all doctor details
         foreach ($doctorData as $data) {
@@ -30,6 +34,9 @@ class UsersController extends Controller
                 if ($data['doc_id'] == $info['id']) {
                     $data['doctor_name'] = $info['name'];
                     $data['doctor_profile'] = $info['profile_photo_url'];
+                    if (isset($appointment) && $appointment['doc_id'] == $info['id']) {
+                        $data['appointment'] = $appointment;
+                    }
                 }
             }
         }
