@@ -12,6 +12,7 @@ class DocsController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -34,10 +35,30 @@ class DocsController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        //this controller is to store booking details from mobile app
+        $reviews = new Reviews();
+        // this is to update the status of the review from "upcoming" to "compteted"
+        $appointment = Appointments::where('id', $request->get('appointment_id'))->first();
+
+        //store the review and rating details from users
+        $reviews->user_id = Auth::user()->id;
+        $reviews->doc_id = $request->get('doctor_id');
+        $reviews->ratings = $request->get('ratings');
+        $reviews->reviews = $request->get('reviews');
+        $reviews->reviewed_by = Auth::user()->name;
+        $reviews->status = 'active'; //new appointment will be saved as 'upcoming' by default
+        $reviews->save();
+
+        //update the status of the appointment
+        $appointment->status = 'complete';
+        $appointment->save();
+
+        return response()->json(['success' => 'The appointment has been completed and reviewed successfully!'], 200);
     }
 
     /**

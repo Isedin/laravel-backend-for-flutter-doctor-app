@@ -18,8 +18,8 @@ return new class extends Migration
             $table->unsignedInteger('doc_id'); //doctor id
             $table->unsignedInteger('ratings')->nullable(); //ratings
             $table->longText('reviews')->nullable(); //reviews
-            $table->string('reviewed_by')->nullable(); //reviewed by
-            $table->string('status')->default('pending'); //status
+            $table->string('reviewed_by'); //reviewed by
+            $table->string('status'); //status
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
