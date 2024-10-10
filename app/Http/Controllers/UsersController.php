@@ -22,10 +22,13 @@ class UsersController extends Controller
         $user = array();
         $user = Auth::user();
         $doctor = User::where('type', 'doctor')->get();
+        $details = $user->user_details;
         $doctorData = Doctor::all();
         //return today appointment together with user data
         $date = now()->format('n/j/Y'); // this is date format without leading zero
-        $appointment = Appointments::where('date', $date)->first();
+
+        //this appointment filter only "upcoming" appointment
+        $appointment = Appointments::where('status', 'upcoming')->where('date', $date)->first();
 
         //collect user data and all doctor details
         foreach ($doctorData as $data) {
@@ -35,13 +38,14 @@ class UsersController extends Controller
                     $data['doctor_name'] = $info['name'];
                     $data['doctor_profile'] = $info['profile_photo_url'];
                     if (isset($appointment) && $appointment['doc_id'] == $info['id']) {
-                        $data['appointment'] = $appointment;
+                        $data['appointments'] = $appointment;
                     }
                 }
             }
         }
         $user['doctor'] = $doctorData;
-        return $user; //return user data and doctor details
+        $user['details'] = $details; //return user data and doctor details
+        return $user;
     }
 
     /**

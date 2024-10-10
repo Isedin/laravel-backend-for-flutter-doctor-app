@@ -96,7 +96,7 @@
                 </div>
             </div>
             {{-- we retrieve the reviews here --}}
-            <div class="bg-white overflow-hidden shadow-xl shadow-xl sm:rounded-lg">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="row">
                     <div class="col-md-7 mt-4">
                         <div class="card">
