@@ -19,6 +19,7 @@ class UsersController extends Controller
      */
     public function index()
     {
+        error_log(('TEST1'));
         $user = array();
         $user = Auth::user();
         $doctor = User::where('type', 'doctor')->get();
@@ -38,7 +39,7 @@ class UsersController extends Controller
                     $data['doctor_name'] = $info['name'];
                     $data['doctor_profile'] = $info['profile_photo_url'];
                     if (isset($appointment) && $appointment['doc_id'] == $info['id']) {
-                        $data['appointments'] = $appointment;
+                        $data['appointment'] = $appointment;
                     }
                 }
             }
@@ -81,6 +82,7 @@ class UsersController extends Controller
      */
     public function register(Request $request)
     {
+        error_log(('TEST2'));
         //validate incoming inputs
         $request->validate([
             'name' => 'required|string',
@@ -103,6 +105,30 @@ class UsersController extends Controller
         return $user;
     }
 
+
+    /**
+     * logout.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function logout()
+    {
+        /**
+         * @var \App\Models\User|null
+         */
+        $user = Auth::user();
+        /**
+         * @var \Laravel\Sanctum\PersonalAccessToken|null
+         */
+        $token = $user->currentAccessToken();
+        if ($token) {
+            $token->delete();
+        }
+
+        return response()->json([
+            'success' => 'Logout successfully!',
+        ], 200);
+    }
 
     /**
      * Show the form for creating a new resource.
